@@ -1,45 +1,35 @@
-function increment() {
-    const inv = document.getElementById("inventory");
-    inv.value = parseInt(inv.value) + 1;
-}
 
-function decrement() {
-    const inv = document.getElementById("inventory");
-    if (parseInt(inv.value) > 0) {
-        inv.value = parseInt(inv.value) - 1;
-    }
-}
 
 function submitProduct() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "add-product", true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    const data = new URLSearchParams();
+    data.append("productName", document.getElementById("productName").value);
+    data.append("sku", document.getElementById("sku").value);
+    data.append("category", document.getElementById("category").value);
+    data.append("size", document.getElementById("size").value);
+    data.append("color", document.getElementById("color").value);
+    data.append("price", document.getElementById("price").value);
+    data.append("inventory", document.getElementById("inventory").value);
 
-    const data = "productName=" + encodeURIComponent(document.getElementById("productName").value) +
-        "&sku=" + encodeURIComponent(document.getElementById("sku").value) +
-        "&category=" + encodeURIComponent(document.getElementById("category").value) +
-        "&size=" + encodeURIComponent(document.getElementById("size").value) +
-        "&color=" + encodeURIComponent(document.getElementById("color").value) +
-        "&price=" + encodeURIComponent(document.getElementById("price").value) +
-        "&inventory=" + encodeURIComponent(document.getElementById("inventory").value);
+    fetch("add-product", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: data.toString()
+    })
+        .then(response => response.json())
+        .then(products => {
+            renderTable1(products);
+            clearForm();
+        })
+        .catch(error => {
+            alert("Error in saving product!");
+            console.error(error);
+        });
 
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            try {
-                const products = JSON.parse(xhr.responseText);
-                renderTable1(products);
-                clearForm();
-            } catch (e) {
-                alert("Invalid response from server");
-            }
-        } else {
-            alert("Error saving product!");
-        }
-    };
-
-    xhr.send(data);
     return false;
 }
+
 
 function renderTable1(products) {
     const tableBody = document.getElementById("tableBody");

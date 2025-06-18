@@ -32,7 +32,7 @@ public class AddProductServlet extends HttpServlet {
 
             // Insert product
             PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO products (product_name, sku, category, size, color, price, inventory_count) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO product (product_name, sku, category, size, color, price, inventory_count) VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, name);
             ps.setString(2, sku);
             ps.setString(3, category);
@@ -45,7 +45,7 @@ public class AddProductServlet extends HttpServlet {
 
             // Now fetch all products
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT product_name, sku, category, size, color, price, inventory_count FROM products");
+            ResultSet rs = stmt.executeQuery("SELECT product_name, sku, category, size, color, price, inventory_count FROM product");
 
             List<Product> products = new ArrayList<>();
             while (rs.next()) {
