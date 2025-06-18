@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Catalog Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Catalog Management System</h2>
+    <ul>
+        <li>Dashboard</li>
+        <li>Add Product</li>
+        <li>Create Promo Code</li>
+    </ul>
+</div>
+
+<div class="main">
+    <h1>Catalog Dashboard</h1>
+
+    <form id="productForm" onsubmit="return submitProduct();">
+        <div class="form-row">
+            <input type="text" id="productName" placeholder="Product Name" required />
+            <input type="text" id="sku" placeholder="SKU" required />
+            <select id="category" required>
+                <option value="">Select Category</option>
+                <option value="Mens">Mens</option>
+                <option value="Womens">Womens</option>
+                <option value="Child">Child</option>
+            </select>
+            <select id="size" required>
+                <option value="">Select Size</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+            </select>
+            <input type="text" id="color" placeholder="Color" required />
+            <input type="number" id="price" placeholder="Price" required step="1" min="0" />
+            <input type="number" id="inventory" required step="1" value="1" min="0" />
+            <button type="submit" form="productForm" class="btn">Add Product</button>
+        </div>
+    </form>
+
+    <table id="productTable">
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Product</th>
+            <th>SKU</th>
+            <th>Size</th>
+            <th>Color</th>
+            <th>Price</th>
+            <th>Inventory Count</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="createPromoBtn">Create Promo Code</button>
+    </div>
+
+    <!-- Promo Modal -->
+    <div id="promoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Promo Code</h2>
+            <form id="promoForm" onsubmit="return submitProduct2();">
+                <label for="promoType">Promo Type:</label>
+                <select id="promoType">
+                    <option value="product">By Product</option>
+                    <option value="order">By Order Type</option>
+                    <option value="category">By Category</option>
+                </select>
+
+                <label for="description">Description:</label>
+                <input type="text" id="description" placeholder="Enter description" />
+
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" placeholder="Enter amount" />
+
+                <button type="submit" form="promoForm">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <table id="promoTable">
+        <thead>
+        <tr>
+            <th>Promo Type</th>
+            <th>Description</th>
+            <th>Promo Code</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody id="promotablebody"></tbody>
+    </table>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
